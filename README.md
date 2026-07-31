@@ -22,10 +22,10 @@ The tool was developed and applied in the investigation of mitochondrial genes p
 The scripts available in this repository correspond to different stages of the analytical pipeline:
 
 ```
-Significant mitochondrial genes
+Significant mitochondrial genes GBA / TWAS-JTI
             |
             ↓
-Phenotype-specific overlap analysis
+Phenotype-specific overlap analysis GBA / TWAS-JTI
             |
             ↓
 Integration between MAGMA GBA and TWAS-JTI
@@ -205,32 +205,6 @@ python MitoGeneOverlap_GBA.py
 ```
 
 or the desired script version.
-
----
-
-# Output organization
-
-All scripts generate tab-separated files (`.txt`) containing:
-
-* simplified gene lists for downstream analyses;
-* complete result tables when applicable;
-* summary reports describing overlap counts.
-
-The output structure was standardized across script versions to facilitate integration with downstream analyses.
-
----
-
-# Biological application
-
-MitoGeneOverlap was applied to investigate mitochondrial genes potentially associated with sarcopenia by integrating different levels of genomic and transcriptomic evidence.
-
-The workflow included:
-
-* identification of mitochondrial genes from MitoCarta3.0;
-* filtering of statistically significant genes;
-* overlap analysis among phenotype-associated datasets;
-* integration between MAGMA GBA and TWAS-JTI;
-* identification of shared mitochondrial genes across sarcopenia-related phenotypes.
 
 ---
 
