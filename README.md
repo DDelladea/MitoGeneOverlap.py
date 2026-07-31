@@ -1,49 +1,244 @@
-# MitoGeneOverlap.py
-Python script to identify and quantify gene overlap between phenotypes, including triple and pairwise intersections.
+# MitoGeneOverlap
 
-## Usage
+A Python-based tool for identifying overlapping genes across multiple biological datasets.
 
-### 1. Requirements
-- Python 3.x
-- pandas
+## Overview
 
-Install dependencies:
-pip install pandas openpyxl
+MitoGeneOverlap is a Python tool developed to identify shared and unique genes across different biological datasets. The tool was designed to support integrative analyses involving mitochondrial genes associated with complex phenotypes.
 
-### 2. Input files
+This repository contains different versions of the script adapted for distinct analytical steps, including:
 
-- Excel files containing gene lists for each phenotype
-- Required columns:
-  - GENE_SYMBOL
-  - ENTREZ_ID
+* overlap analysis among phenotype-specific gene lists;
+* integration of results obtained from different statistical approaches;
+* identification of consensus genes;
+* identification of shared consensus genes across multiple phenotypes.
 
-### 3. Configure input files
+The tool was developed and applied in the investigation of mitochondrial genes potentially involved in sarcopenia by integrating results from Gene-Based Analysis (GBA) and Transcriptome-Wide Association Study using Joint-Tissue Imputation (TWAS-JTI).
 
-Edit the FILES dictionary in the script:
+---
 
-FILES = {
-    "Phenotype1": r"Path/To/File1.xlsx",
-    "Phenotype2": r"Path/To/File2.xlsx",
-    "Phenotype3": r"Path/To/File3.xlsx"
-}
+# Analysis workflow
 
-### 4. Run the script
+The scripts available in this repository correspond to different stages of the analytical pipeline:
 
-python GeneOverlapMap.py
+```
+Significant mitochondrial genes
+            |
+            ↓
+Phenotype-specific overlap analysis
+            |
+            ↓
+Integration between MAGMA GBA and TWAS-JTI
+            |
+            ↓
+Consensus mitochondrial genes
+            |
+            ↓
+Overlap analysis among consensus genes
+```
 
-### 5. Output files
+---
+
+# Script versions
+
+## 1. MitoGeneOverlap_GBA.py
+
+### Purpose
+
+Identifies overlapping genes among multiple phenotype-specific gene lists obtained from Gene-Based Analysis.
+
+This version was designed for gene sets obtained after mitochondrial gene mapping and statistical filtering.
+
+### Input files
+
+Three tabular files containing gene identifiers.
+
+Required columns:
+
+```
+GENE_SYMBOL
+ENTREZ_ID
+```
+
+### Output files
 
 The script generates:
 
-- Gene_Overlap_Phenotypes.xlsx  
-  -> Genes shared across two or more phenotypes
+* genes shared among all phenotypes;
+* genes shared between phenotype pairs;
+* phenotype-specific genes;
+* overlap summary report.
 
-- Gene_Overlap_Report.txt  
-  -> Summary of overlap counts:
-     - Pairwise overlaps
-     - Triple overlaps (if applicable)
+---
 
-### 6. Notes
+## 2. MitoGeneOverlap_TWAS.py
 
-- Each gene is considered once per phenotype (duplicates are removed)
-- Gene identifiers must be consistent across input files
+### Purpose
+
+Identifies overlapping genes among phenotype-specific gene lists obtained from TWAS-JTI analysis.
+
+### Input files
+
+Three tabular files containing TWAS-JTI significant genes.
+
+Required columns:
+
+```
+gene
+genename
+```
+
+Additional columns from TWAS-JTI results are preserved in complete output files.
+
+### Output files
+
+The script generates:
+
+* shared genes among phenotypes;
+* pairwise shared genes;
+* exclusive genes;
+* complete overlap tables;
+* overlap summary report.
+
+---
+
+## 3. MitoGeneOverlap_Consensus.py
+
+### Purpose
+
+Identifies consensus genes detected by two independent analytical approaches:
+
+* MAGMA Gene-Based Analysis;
+* TWAS-JTI analysis.
+
+Consensus genes are defined as genes present in both significant gene sets.
+
+### Input files
+
+Two files are required:
+
+1. TWAS-JTI significant genes.
+2. MAGMA significant genes.
+
+### Output files
+
+The script generates:
+
+* complete consensus gene table;
+* simplified consensus gene list;
+* consensus summary report.
+
+---
+
+## 4. MitoGeneOverlap_ConsensusOverlap.py
+
+### Purpose
+
+Identifies shared consensus genes across multiple phenotypes after integration of MAGMA GBA and TWAS-JTI results.
+
+### Input files
+
+Three consensus gene lists.
+
+Required columns:
+
+```
+gene
+genename
+```
+
+### Output files
+
+The script generates:
+
+* genes shared among all phenotypes;
+* genes shared between phenotype pairs;
+* phenotype-specific consensus genes;
+* binary presence/absence matrix;
+* overlap summary report.
+
+---
+
+# Requirements
+
+Python version:
+
+```
+Python ≥ 3.8
+```
+
+Required packages:
+
+```
+pandas
+openpyxl
+```
+
+Install dependencies:
+
+```bash
+pip install pandas openpyxl
+```
+
+---
+
+# Usage
+
+1. Clone this repository.
+
+2. Install dependencies.
+
+3. Edit the input file paths inside the selected script:
+
+```python
+FILES = {
+    "Phenotype1": "Path/To/File1",
+    "Phenotype2": "Path/To/File2",
+    "Phenotype3": "Path/To/File3"
+}
+```
+
+4. Execute:
+
+```bash
+python MitoGeneOverlap_GBA.py
+```
+
+or the desired script version.
+
+---
+
+# Output organization
+
+All scripts generate tab-separated files (`.txt`) containing:
+
+* simplified gene lists for downstream analyses;
+* complete result tables when applicable;
+* summary reports describing overlap counts.
+
+The output structure was standardized across script versions to facilitate integration with downstream analyses.
+
+---
+
+# Biological application
+
+MitoGeneOverlap was applied to investigate mitochondrial genes potentially associated with sarcopenia by integrating different levels of genomic and transcriptomic evidence.
+
+The workflow included:
+
+* identification of mitochondrial genes from MitoCarta3.0;
+* filtering of statistically significant genes;
+* overlap analysis among phenotype-associated datasets;
+* integration between MAGMA GBA and TWAS-JTI;
+* identification of shared mitochondrial genes across sarcopenia-related phenotypes.
+
+---
+
+# Citation
+
+If you use MitoGeneOverlap, please cite:
+
+**------------**
+
+
+
